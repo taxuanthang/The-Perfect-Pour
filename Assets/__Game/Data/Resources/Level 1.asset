@@ -13,14 +13,18 @@ MonoBehaviour:
   m_Name: Level 1
   m_EditorClassIdentifier: 
   bottle: {fileID: 0}
-  redSize1: 15
-  yellowSize1: 20
-  greenSize: 30
-  yellowSize2: 20
-  redSize2: 15
-  goal: 80
+  redSize1: 1
+  yellowSize1: 0.8
+  greenSize: 0.7
+  yellowSize2: 0.5
+  redSize2: 0.3
+  goal: 0.65
   listIncreasing:
   - speed: 0
-    Size: 20
+    Size: 0.2
+  - speed: 1
+    Size: 0.3
   - speed: 0
-    Size: 30
+    Size: 0.5
+  - speed: 1
+    Size: 0.7
