@@ -140,8 +140,9 @@ public class LevelEditorWindow : EditorWindow
 
         AssetDatabase.CreateAsset(
             level,
-            $"Assets/Level_{database.levels.Count + 1}.asset"
+            $"Assets/__Game/Data/Resources/Level_{database.levels.Count + 1}.asset"
         );
+
 
         database.levels.Add(level);
         EditorUtility.SetDirty(database);

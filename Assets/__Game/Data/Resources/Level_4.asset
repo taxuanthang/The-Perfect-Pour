@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6623c8abe6955124bbeaf3597df89825, type: 3}
-  m_Name: Level_3
+  m_Name: Level_4
   m_EditorClassIdentifier: 
   bottle: {fileID: 0}
-  redSize1: 1
-  yellowSize1: 0.8
-  greenSize: 0.7
-  yellowSize2: 0.5
-  redSize2: 0.3
+  redSize1: 1.64
+  yellowSize1: 0.11
+  greenSize: 1.33
+  yellowSize2: 1.02
+  redSize2: 1.04
   goal: 0.65
   listIncreasing: []
