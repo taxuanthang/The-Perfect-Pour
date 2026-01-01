@@ -108,15 +108,31 @@ public class LevelEditorWindow : EditorWindow
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("PREVIEW", EditorStyles.boldLabel);
 
-        Rect rect = GUILayoutUtility.GetRect(60, 200);
-        EditorGUI.DrawRect(rect, Color.black);
+        // Kích thước preview (giả lập chiều cao chai)
+        Rect rect = GUILayoutUtility.GetRect(80, 240);
 
-        float goalY = rect.yMax - rect.height * level.goal;
+        // ===== VẼ CHAI =====
+        if (level.bottle != null)
+        {
+            GUI.DrawTexture(
+                rect,
+                level.bottle.texture,
+                ScaleMode.ScaleToFit
+            );
+        }
+        else
+        {
+            EditorGUI.DrawRect(rect, Color.black);
+        }
+
+        float goalY = rect.yMin + rect.height * level.goal;
+
         EditorGUI.DrawRect(
-            new Rect(rect.x, goalY, rect.width, 2),
+            new Rect(rect.x, goalY - 1f, rect.width, 2f),
             Color.red
         );
     }
+
 
     void DrawValidate(LevelData level)
     {

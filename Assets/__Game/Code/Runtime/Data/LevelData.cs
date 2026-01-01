@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelData", menuName = "Data/LevelData")]
 public class LevelData : ScriptableObject
 {
+
     public Sprite bottle;                                                               // sprite của bottle
     public float redSize1 = 1f;                                                         // 
     public float yellowSize1 = 0.8f;

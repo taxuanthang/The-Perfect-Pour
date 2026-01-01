@@ -12,11 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6623c8abe6955124bbeaf3597df89825, type: 3}
   m_Name: Level_3
   m_EditorClassIdentifier: 
-  bottle: {fileID: 0}
+  bottle: {fileID: 1219333666, guid: e5ceb8b33a3600e4981acc90bdd2951a, type: 3}
   redSize1: 1
-  yellowSize1: 2
-  greenSize: 3
-  yellowSize2: 4
-  redSize2: 5
-  goal: 0.65
-  listIncreasing: []
+  yellowSize1: 0.9
+  greenSize: 0.7
+  yellowSize2: 0.2
+  redSize2: 0.1
+  goal: 0.397
+  listIncreasing:
+  - speed: 0
+    Size: 0.195
+  - speed: 1
+    Size: 0.396
+  - speed: 0
+    Size: 0.66
+  - speed: 1
+    Size: 0.886

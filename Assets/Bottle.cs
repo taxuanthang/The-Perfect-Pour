@@ -74,6 +74,18 @@ namespace Game
             yellowSize2.localScale = new Vector3(1f, data.yellowSize2, 1f);
             redSize2.localScale = new Vector3(1f, data.redSize2, 1f);
 
+            // SET GOAL
+            float greenZoneHeight = bottleHeight * (data.greenSize - data.yellowSize2);
+
+            goalTransform.SetSizeWithCurrentAnchors(
+                RectTransform.Axis.Vertical,
+                greenZoneHeight
+            );
+
+            Vector2 goalPos = goalTransform.anchoredPosition;
+            goalPos.y = bottleHeight * ((data.greenSize + data.yellowSize2) / 2f);
+            goalTransform.anchoredPosition = goalPos;
+
         }
 
         public void Update()
