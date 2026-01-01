@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level_3
   m_EditorClassIdentifier: 
   bottle: {fileID: 1219333666, guid: 270abbf40c2102c4c94a94f955957a34, type: 3}
-  bottleTarget: {fileID: 0}
+  bottleTargetName: Bottle
   redSize1: 1
   yellowSize1: 0.9
   greenSize: 0.7

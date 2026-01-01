@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class LevelEditorWindow : EditorWindow
     LevelDatabase database;
     int selectedIndex = 0;
     private Sprite lastBottleSprite;
+    private string lastBottleTargetName; // Để detect thay đổi tên
 
     [MenuItem("Tools/Level Editor")]
     static void Open()
@@ -25,16 +27,22 @@ public class LevelEditorWindow : EditorWindow
 
         LevelData level = database.levels[selectedIndex];
 
-        lastBottleSprite = level.bottle;
+        // Cache để detect thay đổi
+        if (level.bottle != lastBottleSprite || level.bottleTargetName != lastBottleTargetName)
+        {
+            ApplyBottleSpriteToScene(level);
+            lastBottleSprite = level.bottle;
+            lastBottleTargetName = level.bottleTargetName;
+        }
 
         DrawLevelData(level);
         DrawPreview(level);
         DrawValidate(level);
 
-        // Khi thay đổi sprite → apply vào bottleTarget của level hiện tại
-        if (level.bottle != lastBottleSprite && level.bottle != null)
+        EditorGUILayout.Space();
+        if (GUILayout.Button("Apply Sprite to Scene Now (Force)", GUILayout.Height(30)))
         {
-            ApplyBottleSpriteToTarget(level);
+            ApplyBottleSpriteToScene(level);
         }
     }
 
@@ -56,7 +64,17 @@ public class LevelEditorWindow : EditorWindow
         for (int i = 0; i < names.Length; i++)
             names[i] = $"Level {i + 1}";
 
-        selectedIndex = EditorGUILayout.Popup("Select Level", selectedIndex, names);
+        int newIndex = EditorGUILayout.Popup("Select Level", selectedIndex, names);
+
+        if (newIndex != selectedIndex)
+        {
+            selectedIndex = newIndex;
+            // Khi chuyển level → force apply ngay sprite của level mới
+            LevelData newLevel = database.levels[selectedIndex];
+            lastBottleSprite = null; // force trigger apply
+            lastBottleTargetName = null;
+            ApplyBottleSpriteToScene(newLevel);
+        }
     }
 
     void DrawLevelData(LevelData level)
@@ -67,35 +85,14 @@ public class LevelEditorWindow : EditorWindow
         level.bottle = (Sprite)EditorGUILayout.ObjectField("Bottle Sprite", level.bottle, typeof(Sprite), false);
 
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField("BOTTLE TARGET IN SCENE (Per Level)", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("BOTTLE IN SCENE", EditorStyles.boldLabel);
+        level.bottleTargetName = EditorGUILayout.TextField("Bottle Object Name", level.bottleTargetName);
 
-        GameObject newTarget = (GameObject)EditorGUILayout.ObjectField(
-            "Drag Bottle Object Here (từ Hierarchy)",
-            level.bottleTarget,
-            typeof(GameObject),
-            true
-        );
-
-        if (newTarget != level.bottleTarget)
-        {
-            level.bottleTarget = newTarget;
-            EditorUtility.SetDirty(level);
-        }
-
-        if (level.bottleTarget == null)
-        {
-            EditorGUILayout.HelpBox("⚠️ Hãy kéo GameObject chai (tên thường là 'Bottle' hoặc 'Goal') từ HIERARCHY vào ô trên.", MessageType.Warning);
-        }
-        else if (!level.bottleTarget.scene.IsValid() || !level.bottleTarget.scene.isLoaded)
-        {
-            EditorGUILayout.HelpBox("❌ Bạn kéo PREFAB (màu xanh)! Hãy kéo từ HIERARCHY (scene object).", MessageType.Error);
-            level.bottleTarget = null;
-            EditorUtility.SetDirty(level);
-        }
-        else
-        {
-            EditorGUILayout.HelpBox($"✅ Đã liên kết với: {level.bottleTarget.name} (trong scene)", MessageType.Info);
-        }
+        EditorGUILayout.HelpBox(
+            "Script sẽ tự tìm GameObject có tên chính xác như trên trong scene và thay sprite.\n" +
+            "Ví dụ: 'Bottle', 'Goal', 'Bottle_Level2'...\n" +
+            "Thay đổi tên → tự apply ngay.",
+            MessageType.Info);
 
         EditorGUILayout.Space();
         level.goal = EditorGUILayout.Slider("Goal", level.goal, 0f, 1f);
@@ -119,7 +116,7 @@ public class LevelEditorWindow : EditorWindow
         EditorGUILayout.LabelField("Speed Increasing", EditorStyles.boldLabel);
 
         if (level.listIncreasing == null)
-            level.listIncreasing = new System.Collections.Generic.List<SpeedIncreasing>();
+            level.listIncreasing = new List<SpeedIncreasing>();
 
         for (int i = 0; i < level.listIncreasing.Count; i++)
         {
@@ -209,36 +206,39 @@ public class LevelEditorWindow : EditorWindow
         selectedIndex = database.levels.Count - 1;
     }
 
-    // ===================== ÁP DỤNG SPRITE CHO BOTTLE CỦA LEVEL NÀY =====================
-    void ApplyBottleSpriteToTarget(LevelData level)
+    // ===================== ÁP DỤNG SPRITE THEO TÊN =====================
+    void ApplyBottleSpriteToScene(LevelData level)
     {
-        if (level.bottleTarget == null)
+        if (level.bottle == null)
+            return;
+
+        if (string.IsNullOrEmpty(level.bottleTargetName))
         {
-            Debug.LogWarning($"Level Editor [Level {selectedIndex + 1}]: Chưa kéo Bottle target cho level này.");
+            Debug.LogWarning($"Level {selectedIndex + 1}: Tên Bottle Object trống!");
             return;
         }
 
-        if (!level.bottleTarget.scene.IsValid() || !level.bottleTarget.scene.isLoaded)
+        GameObject go = GameObject.Find(level.bottleTargetName);
+        if (go == null)
         {
-            Debug.LogError($"Level Editor [Level {selectedIndex + 1}]: Bottle target là prefab! Kéo lại từ Hierarchy.");
+            Debug.LogWarning($"Level {selectedIndex + 1}: Không tìm thấy GameObject '{level.bottleTargetName}' trong scene!");
             return;
         }
 
-        Image img = level.bottleTarget.GetComponent<Image>();
+        Image img = go.GetComponent<Image>();
+        if (img == null) img = go.GetComponentInChildren<Image>(true);
+
         if (img == null)
-            img = level.bottleTarget.GetComponentInChildren<Image>(true);
-
-        if (img == null)
         {
-            Debug.LogWarning($"Level Editor [Level {selectedIndex + 1}]: Không tìm thấy Image trên '{level.bottleTarget.name}'");
+            Debug.LogWarning($"Level {selectedIndex + 1}: Không tìm thấy Image trên '{go.name}'");
             return;
         }
 
-        Undo.RecordObject(img, "Apply Bottle Sprite (Per Level)");
+        Undo.RecordObject(img, "Apply Bottle Sprite");
         img.sprite = level.bottle;
         EditorUtility.SetDirty(img);
         SceneView.RepaintAll();
 
-        Debug.Log($"Level Editor [Level {selectedIndex + 1}]: Đã thay sprite thành công cho '{img.gameObject.name}' - Kích thước & vị trí giữ nguyên!");
+        Debug.Log($"Level Editor: ĐÃ ÁP DỤNG SPRITE cho '{go.name}' (Level {selectedIndex + 1})");
     }
 }

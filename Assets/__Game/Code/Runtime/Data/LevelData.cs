@@ -4,10 +4,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelData", menuName = "Data/LevelData")]
 public class LevelData : ScriptableObject
 {
-    public Sprite bottle; // sprite của bottle
+    public Sprite bottle;
 
-    [Header("Scene Bottle Target (Per Level)")]
-    public GameObject bottleTarget; // Kéo Bottle từ Hierarchy vào đây cho từng level riêng
+    [Header("Scene Bottle Settings")]
+    public string bottleTargetName = "Bottle"; // Tên GameObject chứa Image chai trong scene
 
     public float redSize1 = 1f;
     public float yellowSize1 = 0.8f;
