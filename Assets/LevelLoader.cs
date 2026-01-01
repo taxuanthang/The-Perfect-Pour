@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LevelLoader : MonoBehaviour
 {
@@ -10,3 +10,4 @@ public class LevelLoader : MonoBehaviour
         return data; 
     }
 }
+
