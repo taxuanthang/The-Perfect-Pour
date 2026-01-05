@@ -28,7 +28,15 @@ namespace Game
             this.Subscribe(GameEvent.OnPointerDown, OnPointerDown);
             this.Subscribe(GameEvent.OnPointerUp, OnPointerUp);
 
+            // Subscribe to water effect completion
+            _bottle.OnWaterEffectComplete.AddListener(OnWaterEffectComplete);
+
             GenerateLevel();
+        }
+
+        private void OnDestroy()
+        {
+            _bottle.OnWaterEffectComplete.RemoveListener(OnWaterEffectComplete);
         }
 
         public void GenerateLevel()
@@ -46,6 +54,7 @@ namespace Game
                 goal = levelData.goal,
 
                 listIncreasing = levelData.listIncreasing,
+                waterType = levelData.waterType
             };
             _bottle.GenerateLevel(bottleData);
         }
@@ -67,8 +76,14 @@ namespace Game
             _faucet.SetPour(false);
             _bottle.SetPour(false);
 
+
+        }
+
+        private void OnWaterEffectComplete()
+        {
             WinState winState = _bottle.GetWinState();
-            Debug.Log(winState);
+            Debug.Log($"Final WinState: {winState}");
+            
             switch (winState) 
             { 
                 case WinState.None:
@@ -79,7 +94,6 @@ namespace Game
                     break;
                 case WinState.Red: 
                     break;
-
             }
         }
     }

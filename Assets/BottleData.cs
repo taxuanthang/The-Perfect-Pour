@@ -14,4 +14,6 @@ public class BottleData
     public float goal = 80f;
 
     public List<SpeedIncreasing> listIncreasing;
+    public WaterType waterType;
+
 }

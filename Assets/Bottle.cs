@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.Events;
 namespace Game
 {
     public class Bottle : MonoBehaviour
@@ -42,6 +44,9 @@ namespace Game
         [SerializeField]
         float speed;
         float bottleHeight = 0;
+        
+        private bool isEffectInProgress = false;
+        public UnityEvent OnWaterEffectComplete;
 
         public void Awake()
         {
@@ -75,11 +80,17 @@ namespace Game
             redSize2.localScale = new Vector3(1f, data.redSize2, 1f);
 
         }
-
+        private bool wasPoured = false;
         public void Update()
         {
             IncreaseWaterLevel();
+            if (wasPoured && !isPoured)
+            {
+                StartCoroutine(ApplyWaterTypeEffect());
+            }
+            wasPoured = isPoured;
         }
+        
         public void IncreaseWaterLevel()
         {
             if (!isPoured)
@@ -140,12 +151,77 @@ namespace Game
         {
             return waterTransform.localScale.y;
         }
-       
 
         public void SetPour(bool isPour)
         {
             this.isPoured = isPour;
         }
+
+        private IEnumerator ApplyWaterTypeEffect()
+        {
+            isEffectInProgress = true;
+
+            Debug.Log($"Water level before effect: {waterTransform.localScale.y}");
+
+            yield return null;
+
+            float startLevel = waterTransform.localScale.y;
+            float targetLevel = startLevel;
+            float duration = 1f;
+
+            switch (data.waterType)
+            {
+                case WaterType.Water:
+                    Debug.Log("WaterType: Water (no change)");
+                    break;
+                case WaterType.Sand:
+                    Debug.Log("WaterType: Sand (no change)");
+                    break;
+                case WaterType.Honey:
+                    Debug.Log("WaterType: Honey (no change)");
+                    break;
+                case WaterType.IceWater:
+                    Debug.Log("WaterType: IceWater (increase 5%)");
+                    targetLevel = Mathf.Min(startLevel * 1.05f, 1f); // Increase by 5%
+                    break;
+                case WaterType.Lava:
+                    Debug.Log("WaterType: Lava (decrease 8%)");
+                    targetLevel = Mathf.Max(startLevel * 0.92f, 0f); // Decrease by 8%
+                    break;
+                case WaterType.Soda:
+                    Debug.Log("WaterType: Soda (wait for foam, decrease 10-15%)");
+                    yield return new WaitForSeconds(1.5f);
+                    float percent = Random.Range(0.10f, 0.15f);
+                    targetLevel = Mathf.Max(startLevel * (1f - percent), 0f); // Decrease by 10-15%
+                    break;
+            }
+
+            if (!Mathf.Approximately(startLevel, targetLevel))
+            {
+                float elapsed = 0f;
+                while (elapsed < duration)
+                {
+                    float newY = Mathf.Lerp(startLevel, targetLevel, elapsed / duration);
+                    waterTransform.localScale = new Vector3(
+                        waterTransform.localScale.x,
+                        newY,
+                        waterTransform.localScale.z
+                    );
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                }
+                waterTransform.localScale = new Vector3(
+                    waterTransform.localScale.x,
+                    targetLevel,
+                    waterTransform.localScale.z
+                );
+            }
+
+            Debug.Log($"Water level after effect: {waterTransform.localScale.y}");
+            isEffectInProgress = false;
+            OnWaterEffectComplete?.Invoke();
+        }
     }
 }
+
 

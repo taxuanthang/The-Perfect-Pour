@@ -10,7 +10,11 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+.vscode/
 *.log
+
+/ProjectSettings/
+/Packages/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -37,6 +41,7 @@ ExportedObj/
 *.csproj
 *.unityproj
 *.sln
+*.slnx
 *.suo
 *.tmp
 *.user

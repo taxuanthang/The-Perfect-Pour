@@ -1,5 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+public enum WaterType
+{
+    Water,
+    IceWater,
+    Lava,
+    Sand,
+    Honey,
+    Soda
+}
+
 [CreateAssetMenu(fileName = "LevelData", menuName = "Data/LevelData")]
 public class LevelData : ScriptableObject
 {
@@ -13,5 +23,5 @@ public class LevelData : ScriptableObject
     public float goal = 0.65f;                                                          // 0.65f là vạch
 
     public List<SpeedIncreasing> listIncreasing;                                        // Speed: increase, Size: 0.3f là đến mức 0.3 thì tăng 2x, 3x
-
+    public WaterType waterType;
 }

@@ -1493,6 +1493,7 @@ MonoBehaviour:
     redSize2: 15
     goal: 80
     listIncreasing: []
+    waterType: 0
   isPoured: 0
   waterTransform: {fileID: 1696322908}
   bottleTransform: {fileID: 1564893935}
@@ -1712,7 +1713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963eda1bccd8f244fa7a6b06b00b0ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 6103cf2631ec361499ba500c5123a0de, type: 2}
+  data: {fileID: 11400000, guid: b80e4cdc602d82842bc90c77a126f748, type: 2}
 --- !u!1 &1794529203
 GameObject:
   m_ObjectHideFlags: 0
