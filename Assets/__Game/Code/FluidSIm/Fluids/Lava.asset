@@ -24,7 +24,7 @@ MonoBehaviour:
   thermalDiffusivity: 0.572
   boilState: 4
   boilTemp: 100
-  freezeState: 18
+  freezeState: 12
   freezeTemp: 700
   friction: 0
   entropyTarget: 11111

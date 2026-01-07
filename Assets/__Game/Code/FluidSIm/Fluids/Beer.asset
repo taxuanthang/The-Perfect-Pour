@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 574fc9d07e104a9409d35d2e718dcb71, type: 3}
   m_Name: Beer
   m_EditorClassIdentifier: 
-  fluidType: 7
+  fluidType: 6
   gravity: -12
   collisionDamping: 0.8
   smoothingRadius: 0.35
@@ -22,9 +22,9 @@ MonoBehaviour:
   viscosityStrength: 0.06
   startTemperature: 22
   thermalDiffusivity: 0.143
-  boilState: 7
+  boilState: 6
   boilTemp: 100
-  freezeState: 7
+  freezeState: 6
   freezeTemp: 0
   friction: 0
   entropyTarget: 11111

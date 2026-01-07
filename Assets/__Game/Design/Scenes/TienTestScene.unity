@@ -761,59 +761,6 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   pressSound: {fileID: 0}
   releaseSound: {fileID: 0}
---- !u!1 &790915040
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 790915041}
-  - component: {fileID: 790915042}
-  m_Layer: 0
-  m_Name: Beer Spawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &790915041
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 790915040}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &790915042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 790915040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 895837b52d5fc53409ded3589d4da696, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 7
-  particleCount: 10000
-  initialVelocity: {x: 0, y: 0}
-  spawnCentre: {x: 0, y: -6.02}
-  spawnSize: {x: 30, y: 5}
-  jitterStr: 0.025
-  temperature: 10
-  showSpawnBoundsGizmos: 0
-  wireFrameColor: {r: 1, g: 1, b: 0, a: 0.5}
 --- !u!1 &933628862
 GameObject:
   m_ObjectHideFlags: 0
@@ -1337,7 +1284,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1297097947}
   m_Layer: 0
-  m_Name: source object lava
+  m_Name: source object snow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1556,9 +1503,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1a749ec01121e4042908af5b5b9b05c6, type: 2}
   - {fileID: 11400000, guid: e3fcac6bfc8f86c47a05c69885238ed5, type: 2}
   - {fileID: 11400000, guid: 7e477f272905e9b42bf03ec9ed80850f, type: 2}
+  - {fileID: 11400000, guid: b5cea4fcd7a734a4e992ecc1fbce5dc2, type: 2}
+  - {fileID: 11400000, guid: 5785f53adcf506945b4fa140fcce5891, type: 2}
   compute: {fileID: 7200000, guid: 5153d1e4fc4b4204bae3cf5df6749c6d, type: 3}
-  spawners:
-  - {fileID: 0}
+  spawners: []
   boxColliders:
   - {fileID: 933628863}
   circleColliders: []
@@ -1566,7 +1514,7 @@ MonoBehaviour:
   - transform: {fileID: 1170944028}
     velo: {x: 0, y: 0}
     spawnRate: 0
-    fluidType: 7
+    fluidType: 6
   - transform: {fileID: 1589948377}
     velo: {x: 0, y: 0}
     spawnRate: 0
@@ -1574,7 +1522,7 @@ MonoBehaviour:
   - transform: {fileID: 1297097947}
     velo: {x: 0, y: 0}
     spawnRate: 0
-    fluidType: 4
+    fluidType: 16
   - transform: {fileID: 345152387}
     velo: {x: 0, y: 0}
     spawnRate: 0
@@ -1806,7 +1754,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 76225022}
   - {fileID: 1852035684}
-  - {fileID: 790915041}
   - {fileID: 1458461352}
   - {fileID: 1426239668}
   - {fileID: 1589307800}

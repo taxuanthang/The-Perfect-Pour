@@ -22,6 +22,7 @@ public enum FluidType {
     Magma,
     Whiskey,
     Cola,
+    Sand,
 }
 
 public enum VisualStyle

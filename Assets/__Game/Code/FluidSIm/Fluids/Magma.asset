@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 574fc9d07e104a9409d35d2e718dcb71, type: 3}
   m_Name: Magma
   m_EditorClassIdentifier: 
-  fluidType: 19
+  fluidType: 13
   gravity: -12
   collisionDamping: 0.2
   smoothingRadius: 0.35
@@ -22,9 +22,9 @@ MonoBehaviour:
   viscosityStrength: 0.06
   startTemperature: 701
   thermalDiffusivity: 0.286
-  boilState: 19
+  boilState: 13
   boilTemp: 1200
-  freezeState: 18
+  freezeState: 12
   freezeTemp: 700
   friction: 0
   entropyTarget: 11111
