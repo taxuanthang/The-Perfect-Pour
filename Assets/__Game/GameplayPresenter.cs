@@ -1,6 +1,7 @@
 using Game;
 using Kuchen;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -50,6 +51,8 @@ namespace Game
             _bottle.GenerateLevel(bottleData);
         }
 
+        bool triggerOnce = false;
+
         // Input
         public void OnHold()
         {
@@ -59,13 +62,23 @@ namespace Game
         }
         public void OnPointerDown()
         {
-            _bottle.SetPour(true);
-            _faucet.SetPour(true);
+            if(!triggerOnce)
+            {
+                _bottle.SetPour(true);
+                _faucet.SetPour(true);
+            }    
         }
         public void OnPointerUp()
         {
+            if(triggerOnce)
+            {
+                return;
+            }
+            triggerOnce = true;
             _faucet.SetPour(false);
             _bottle.SetPour(false);
+
+            DelayWater();
 
             WinState winState = _bottle.GetWinState();
             Debug.Log(winState);
@@ -81,6 +94,24 @@ namespace Game
                     break;
 
             }
+        }
+
+        public async void DelayWater()
+        {
+            await Task.Delay(1000);
+            int repeatTime = Random.Range(3, 5);
+            for (int i = 0; i < repeatTime; i++)
+            {
+                CreateWater();
+                await Task.Delay(400);
+            }
+        }
+
+        public async void CreateWater()
+        {
+            _faucet.CreateDelayWater();
+            await Task.Delay(2000);
+            _bottle.CreateDelayWater();
         }
     }
 }

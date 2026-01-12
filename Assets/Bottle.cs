@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Threading.Tasks;
+using UnityEngine;
 namespace Game
 {
     public class Bottle : MonoBehaviour
@@ -157,6 +158,12 @@ namespace Game
         public void SetPour(bool isPour)
         {
             this.isPoured = isPour;
+        }
+
+
+        public void CreateDelayWater()
+        {
+            waterTransform.localScale += new Vector3(0, increaseAmount, 0) * 0.3f;
         }
     }
 }
