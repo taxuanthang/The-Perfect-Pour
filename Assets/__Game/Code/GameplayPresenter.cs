@@ -1,0 +1,237 @@
+﻿using Cysharp.Threading.Tasks;
+using Game;
+using Kuchen;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Unity.VisualScripting;
+using UnityEngine;
+
+
+
+namespace Game
+{
+    public class GameplayPresenter : MonoBehaviour
+    {
+        [SerializeField]
+        private Bottle _bottle;
+
+        [SerializeField]
+        private Faucet _faucet;
+
+        [Header("Managers")]
+        [SerializeField]
+        private LevelLoader _levelLoader;
+        [SerializeField]
+        private UIManager _uiManager;
+        [SerializeField]
+        private PlayerManager _playerManager;
+        [SerializeField]
+        MainManager _mainManager;
+
+        CancellationTokenSource waterCTS;
+
+        void OnEnable()
+        {
+            waterCTS = new CancellationTokenSource();
+        }
+
+        void OnDisable()
+        {
+            waterCTS.Cancel();
+            waterCTS.Dispose();
+        }
+
+        public void SetUp()
+        {
+            this.Subscribe(GameEvent.ENTER_GAME, OnGameEnter);
+            this.Subscribe(GameEvent.NEW_GAME, OnNewGame);
+
+
+
+
+            //Input Event
+            this.Subscribe(GameEvent.OnHolded, OnHold);
+            this.Subscribe(GameEvent.OnCliked, OnClick);
+            this.Subscribe(GameEvent.OnPointerDown, OnPointerDown);
+            this.Subscribe(GameEvent.OnPointerUp, OnPointerUp);
+
+            GenerateLevel();
+        }
+
+
+        void OnGameEnter()
+        {
+            //StopPlaying();
+
+            ////Load data vào playerData
+            //PlayerData data = _saveGameManager.LoadGame();
+            //_playerManager.LoadGameDataFromCurrentCharacterData(data);
+
+            //
+            //data = _playerManager.GetPlayerData();
+            // cập nhật data vừa load vào UI
+            _uiManager.OnGameEnter();
+
+            //int currentHealth = _playerManager.UpdateFromOffline();
+
+        }
+
+        async void OnNewGame()
+        {
+            //if (_playerManager.CheckHealthEmpty())
+            //{
+            //    return;
+            //}
+
+            //// trừ máu người chơi
+            //_playerManager.MinusHealth(1);
+
+            PlayerData data = _playerManager.GetPlayerData();
+
+
+            //loadLevelData hiện tại + tạo pigGrid, pigWaiter, BoxLevel
+            _levelLoader.LoadLevelConfigByIndex(data.levelConfigIndex);
+
+            await _uiManager.PlayLoadingScreen();
+            //Cập nhật UI
+            _uiManager.OnNewLevel(data);
+            ResumePlaying();
+
+
+        }
+
+        void StopPlaying()
+        {
+            _mainManager.Pause();
+
+
+
+        }
+
+        void ResumePlaying()
+        {
+            _mainManager.Resume();
+
+
+        }
+
+
+
+        public void GenerateLevel()
+        {
+            var levelData = _levelLoader.GetLevelData();
+
+
+
+            Sprite paddedImage = SpritePadder.PadSprite(
+                levelData.bottle,
+                562,     // khung mới
+                562,
+                AnchorMode.Bottom   // ví dụ: đặt ảnh ở đáy
+            );
+
+
+            Sprite paddedImage2 = SpritePadder.PadSprite(
+                levelData.layer,
+                562,     // khung mới
+                562,
+                AnchorMode.Bottom   // ví dụ: đặt ảnh ở đáy
+            );
+
+            var bottleData = new BottleData()
+            {
+                bottle = paddedImage,
+                layer = paddedImage2,
+                redSize1 = levelData.redSize1,
+                yellowSize1 = levelData.yellowSize1,
+                greenSize = levelData.greenSize,
+                yellowSize2 = levelData.yellowSize2,
+                redSize2 = levelData.redSize2,
+
+                goal = levelData.goal,
+
+                listIncreasing = levelData.listIncreasing,
+            };
+
+
+            _bottle.GenerateLevel(bottleData);
+        }
+
+        bool triggerOnce = false;
+
+        // Input
+        public void OnHold()
+        {
+        }
+        public void OnClick()
+        {
+        }
+        public void OnPointerDown()
+        {
+            this.Publish(GameEvent.NEW_GAME);
+            if(!triggerOnce)
+            {
+                _bottle.SetPour(true);
+                _faucet.SetPour(true);
+            }    
+        }
+        public void OnPointerUp()
+        {
+            if(triggerOnce)
+            {
+                return;
+            }
+            triggerOnce = true;
+            _faucet.SetPour(false);
+            _bottle.SetPour(false);
+
+            DelayWater();
+
+            WinState winState = _bottle.GetWinState();
+            Debug.Log(winState);
+            switch (winState) 
+            { 
+                case WinState.None:
+                    break;
+                case WinState.Green:
+                    break;
+                case WinState.Yellow: 
+                    break;
+                case WinState.Red: 
+                    break;
+
+            }
+        }
+
+
+
+        public async Task DelayWater()
+        {
+            try
+            {
+                await Task.Delay(1000, cancellationToken: waterCTS.Token);
+
+                int repeatTime = UnityEngine.Random.Range(3, 5);
+
+                for (int i = 0; i < repeatTime; i++)
+                {
+                    CreateWater();   // ❗ chờ xong mới spawn tiếp
+                    await Task.Delay(400, cancellationToken: waterCTS.Token);
+                }
+            }
+            catch (OperationCanceledException) { }
+        }
+
+        public async Task CreateWater()
+        {
+            _faucet.CreateDelayWater();
+
+            await Task.Delay(2000, cancellationToken: waterCTS.Token);
+
+            _bottle.CreateDelayWater();
+        }
+    }
+}
+
