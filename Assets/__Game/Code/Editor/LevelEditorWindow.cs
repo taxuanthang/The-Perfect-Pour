@@ -84,6 +84,9 @@ public class LevelEditorWindow : EditorWindow
 
         level.bottle = (Sprite)EditorGUILayout.ObjectField("Bottle Sprite", level.bottle, typeof(Sprite), false);
 
+
+        level.layer = (Sprite)EditorGUILayout.ObjectField("Bottle Layer", level.layer, typeof(Sprite), false);
+
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("BOTTLE IN SCENE", EditorStyles.boldLabel);
         level.bottleTargetName = EditorGUILayout.TextField("Bottle Object Name", level.bottleTargetName);
@@ -197,7 +200,7 @@ public class LevelEditorWindow : EditorWindow
     void CreateLevel()
     {
         LevelData level = ScriptableObject.CreateInstance<LevelData>();
-        string path = $"Assets/__Game/Data/Resources/Level_{database.levels.Count + 1}.asset";
+        string path = $"Assets/__Game/Data/Resources/Level {database.levels.Count + 1}.asset";
         AssetDatabase.CreateAsset(level, path);
         database.levels.Add(level);
         EditorUtility.SetDirty(database);

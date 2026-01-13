@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     public Sprite bottle;
+    public Sprite layer;
 
     [Header("Scene Bottle Settings")]
     public string bottleTargetName = "Bottle"; // Tên GameObject chứa Image chai trong scene
