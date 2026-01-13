@@ -5,6 +5,7 @@ using UnityEngine;
 public class BottleData
 {
     public Sprite bottle;
+    public Sprite layer;
     public float redSize1 = 15f;
     public float yellowSize1 = 20f;
     public float greenSize = 30f;

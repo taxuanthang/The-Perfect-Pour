@@ -1,7 +1,10 @@
-using Game;
+﻿using Game;
 using Kuchen;
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -21,6 +24,19 @@ namespace Game
         [SerializeField]
         private LevelLoader _levelLoader;
 
+        CancellationTokenSource waterCTS;
+
+        void OnEnable()
+        {
+            waterCTS = new CancellationTokenSource();
+        }
+
+        void OnDisable()
+        {
+            waterCTS.Cancel();
+            waterCTS.Dispose();
+        }
+
         public void SetUp()
         {
             //Input Event
@@ -35,9 +51,28 @@ namespace Game
         public void GenerateLevel()
         {
             var levelData = _levelLoader.GetLevelData();
-            var bottleData= new BottleData()
+
+
+
+            Sprite paddedImage = SpritePadder.PadSprite(
+                levelData.bottle,
+                562,     // khung mới
+                562,
+                AnchorMode.Bottom   // ví dụ: đặt ảnh ở đáy
+            );
+
+
+            Sprite paddedImage2 = SpritePadder.PadSprite(
+                levelData.layer,
+                562,     // khung mới
+                562,
+                AnchorMode.Bottom   // ví dụ: đặt ảnh ở đáy
+            );
+
+            var bottleData = new BottleData()
             {
-                bottle = levelData.bottle,
+                bottle = paddedImage,
+                layer = paddedImage2,
                 redSize1 = levelData.redSize1,
                 yellowSize1 = levelData.yellowSize1,
                 greenSize = levelData.greenSize,
@@ -48,6 +83,8 @@ namespace Game
 
                 listIncreasing = levelData.listIncreasing,
             };
+
+
             _bottle.GenerateLevel(bottleData);
         }
 
@@ -96,21 +133,31 @@ namespace Game
             }
         }
 
-        public async void DelayWater()
+
+
+        public async Task DelayWater()
         {
-            await Task.Delay(1000);
-            int repeatTime = Random.Range(3, 5);
-            for (int i = 0; i < repeatTime; i++)
+            try
             {
-                CreateWater();
-                await Task.Delay(400);
+                await Task.Delay(1000, cancellationToken: waterCTS.Token);
+
+                int repeatTime = UnityEngine.Random.Range(3, 5);
+
+                for (int i = 0; i < repeatTime; i++)
+                {
+                    CreateWater();   // ❗ chờ xong mới spawn tiếp
+                    await Task.Delay(400, cancellationToken: waterCTS.Token);
+                }
             }
+            catch (OperationCanceledException) { }
         }
 
-        public async void CreateWater()
+        public async Task CreateWater()
         {
             _faucet.CreateDelayWater();
-            await Task.Delay(2000);
+
+            await Task.Delay(2000, cancellationToken: waterCTS.Token);
+
             _bottle.CreateDelayWater();
         }
     }

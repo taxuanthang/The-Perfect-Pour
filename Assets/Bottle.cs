@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 namespace Game
 {
     public class Bottle : MonoBehaviour
@@ -9,6 +10,12 @@ namespace Game
 
         [SerializeField]
         bool isPoured = false;
+
+        [SerializeField]
+        Image bottleImage;
+
+        [SerializeField]
+        Image mask;
 
         [SerializeField]
         RectTransform waterTransform;
@@ -62,6 +69,8 @@ namespace Game
         {
             this.data = data;
 
+            bottleImage.sprite = data.bottle;
+            mask.sprite = data.layer;
             // chỉnh goal 
 
             Vector2 pos = goalTransform.anchoredPosition;
