@@ -57,7 +57,7 @@ namespace Game
             this.Subscribe(GameEvent.OnPointerDown, OnPointerDown);
             this.Subscribe(GameEvent.OnPointerUp, OnPointerUp);
 
-            GenerateLevel();
+
         }
 
 
@@ -70,11 +70,14 @@ namespace Game
             //_playerManager.LoadGameDataFromCurrentCharacterData(data);
 
             //
-            //data = _playerManager.GetPlayerData();
+            var data = _playerManager.GetPlayerData();
             // cập nhật data vừa load vào UI
-            _uiManager.OnGameEnter();
+            _uiManager.OnGameEnter(data);
 
             //int currentHealth = _playerManager.UpdateFromOffline();
+
+            GenerateLevel();
+
 
         }
 
@@ -88,17 +91,20 @@ namespace Game
             //// trừ máu người chơi
             //_playerManager.MinusHealth(1);
 
+            //Reset Level
+            print("New Game Started");
             PlayerData data = _playerManager.GetPlayerData();
-
-
-            //loadLevelData hiện tại + tạo pigGrid, pigWaiter, BoxLevel
+            //loadLevelData hiện tại 
             _levelLoader.LoadLevelConfigByIndex(data.levelConfigIndex);
+
+            GenerateLevel();
 
             await _uiManager.PlayLoadingScreen();
             //Cập nhật UI
             _uiManager.OnNewLevel(data);
-            ResumePlaying();
 
+
+            ResumePlaying();
 
         }
 
@@ -114,7 +120,6 @@ namespace Game
         {
             _mainManager.Resume();
 
-
         }
 
 
@@ -122,8 +127,6 @@ namespace Game
         public void GenerateLevel()
         {
             var levelData = _levelLoader.GetLevelData();
-
-
 
             Sprite paddedImage = SpritePadder.PadSprite(
                 levelData.bottle,
@@ -150,11 +153,14 @@ namespace Game
                 yellowSize2 = levelData.yellowSize2,
                 redSize2 = levelData.redSize2,
 
+                waterType = levelData.waterType,
+
                 goal = levelData.goal,
 
                 listIncreasing = levelData.listIncreasing,
             };
 
+            _faucet.SetUp(levelData.waterType,levelData.faucetType);
 
             _bottle.GenerateLevel(bottleData);
         }
@@ -170,24 +176,33 @@ namespace Game
         }
         public void OnPointerDown()
         {
-            this.Publish(GameEvent.NEW_GAME);
-            if(!triggerOnce)
-            {
-                _bottle.SetPour(true);
-                _faucet.SetPour(true);
-            }    
-        }
-        public void OnPointerUp()
-        {
-            if(triggerOnce)
+            if (_mainManager.isPaused)
             {
                 return;
             }
+            if(!triggerOnce)
+            {
+                this.Publish(GameEvent.NEW_GAME);
+            }
+
+            _bottle.SetPour(true);
+            _faucet.SetPour(true);
+        }
+        public async void OnPointerUp()
+        {
+
+            if (_mainManager.isPaused)
+            {
+                return;
+            }
+
+            StopPlaying();
             triggerOnce = true;
             _faucet.SetPour(false);
             _bottle.SetPour(false);
+            _bottle.SetGoalActive(true);
 
-            DelayWater();
+            await DelayWater();
 
             WinState winState = _bottle.GetWinState();
             Debug.Log(winState);
@@ -203,6 +218,19 @@ namespace Game
                     break;
 
             }
+            // cộng data cho player
+            _playerManager.OnWin(winState);
+
+            // stop game play
+
+            var data = _playerManager.GetPlayerData();
+            // play win/lose screen
+            //Update UI theo playerData
+            _uiManager.OnLevelWin(data);
+            //Update UI theo winstate
+            _uiManager.OnLevelWin(winState);
+
+
         }
 
 
@@ -217,8 +245,17 @@ namespace Game
 
                 for (int i = 0; i < repeatTime; i++)
                 {
-                    CreateWater();   // ❗ chờ xong mới spawn tiếp
-                    await Task.Delay(400, cancellationToken: waterCTS.Token);
+                    if(i == repeatTime-1)
+                    {
+                        await CreateWater();
+                        await Task.Delay(1500, cancellationToken: waterCTS.Token);
+                    }
+                    else
+                    {
+                        CreateWater(); 
+                        await Task.Delay(400, cancellationToken: waterCTS.Token);
+                    }
+
                 }
             }
             catch (OperationCanceledException) { }
@@ -228,7 +265,7 @@ namespace Game
         {
             _faucet.CreateDelayWater();
 
-            await Task.Delay(2000, cancellationToken: waterCTS.Token);
+            await Task.Delay(1500, cancellationToken: waterCTS.Token);
 
             _bottle.CreateDelayWater();
         }

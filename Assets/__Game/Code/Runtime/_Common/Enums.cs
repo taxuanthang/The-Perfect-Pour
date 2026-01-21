@@ -15,3 +15,19 @@ public enum AnchorMode
     BottomLeft,
     BottomRight
 }
+
+public enum WaterType
+{
+    Water,
+    Milk,
+    Juice,
+    Soda,
+    RedWine,
+    Paint,
+}
+
+public enum FaucetType
+{
+    Normal,
+    X2,
+}
