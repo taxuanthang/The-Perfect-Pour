@@ -153,6 +153,7 @@ namespace Game
                 goal = levelData.goal,
 
                 listIncreasing = levelData.listIncreasing,
+                waterType = levelData.waterType
             };
 
 

@@ -21,6 +21,12 @@ namespace Game
         RectTransform waterTransform;
 
         [SerializeField]
+        Image waterImage;
+
+        [SerializeField]
+        RectTransform sodaTransform;
+
+        [SerializeField]
         RectTransform bottleTransform;
 
         [SerializeField]
@@ -50,11 +56,26 @@ namespace Game
         [SerializeField]
         float speed;
         float bottleHeight = 0;
+        
+        [Header("Foam Settings")]
+        [SerializeField]
+        float foamDecreaseRate = 0.05f;
+        float currentFoamScale = 0f;
+
+        [Header("Lava Settings")]
+        [SerializeField]
+        float lavaDecreaseRate = 0.05f;
+        float lavaTargetScale = 0f;
+        bool lavaTargetSet = false;
 
         public void Awake()
         {
             bottleTransform = GetComponent<RectTransform>();
             waterTransform.localScale = new Vector3(1f,0f,1f);
+            if (sodaTransform != null)
+            {
+                sodaTransform.localScale = new Vector3(1f,0f,1f);
+            }
             //ResetGoalLevel
             redSize1.localScale = new Vector3(1f, 0f, 1f);
             yellowSize1.localScale = new Vector3(1f, 0f, 1f);
@@ -96,11 +117,41 @@ namespace Game
             goalPos.y = bottleHeight * ((data.greenSize + data.yellowSize2) / 2f);
             goalTransform.anchoredPosition = goalPos;
 
+            // Handle soda foam
+            if (sodaTransform != null)
+            {
+                if (data.waterType == WaterType.Soda)
+                {
+                    sodaTransform.gameObject.SetActive(true);
+                }
+                else
+                {
+                    sodaTransform.gameObject.SetActive(false);
+                }
+            }
+
+            // Set water color based on type
+            if (waterImage != null)
+            {
+                switch (data.waterType)
+                {
+                    case WaterType.Soda:
+                        waterImage.color = new Color(0.4f, 0.26f, 0.13f, 1f); // Brown
+                        break;
+                    case WaterType.Lava:
+                        waterImage.color = new Color(1f, 0.5f, 0f, 1f); // Orange
+                        break;
+                    default:
+                        waterImage.color = Color.blue;
+                        break;
+                }
+            }
         }
 
         public void Update()
         {
             IncreaseWaterLevel();
+            HandleWaterType();
         }
         public void IncreaseWaterLevel()
         {
@@ -127,8 +178,71 @@ namespace Game
             if (waterTransform.localScale.y < 1f)
             {
                 waterTransform.localScale += new Vector3(0, increaseAmount, 0) * Time.deltaTime * speed;
+                
+                // Increase foam while actively pouring (1.5x water increase rate)
+                if (data.waterType == WaterType.Soda && sodaTransform != null)
+                {
+                    float waterIncreaseThisFrame = increaseAmount * Time.deltaTime * speed;
+                    currentFoamScale += waterIncreaseThisFrame * 1.5f;
+                    currentFoamScale = Mathf.Min(currentFoamScale, 1f);
+                }
             }
             
+        }
+
+
+        public void HandleWaterType()
+        {
+            switch (data.waterType)
+            {
+                case WaterType.Soda:
+                    HandleSoda();
+                    break;
+                case WaterType.Lava:
+                    HandleLava();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        void HandleSoda()
+        {
+            if (sodaTransform == null) return;
+            
+            // Decrease foam after pour is done
+            if (!isPoured && currentFoamScale > 0f)
+            {
+                currentFoamScale -= foamDecreaseRate * Time.deltaTime;
+                currentFoamScale = Mathf.Max(currentFoamScale, 0f);
+            }
+            
+            // Update foam visual
+            sodaTransform.localScale = new Vector3(1f, currentFoamScale, 1f);
+            
+            // Keep foam at same bottom position as water
+            Vector2 offsetMin = sodaTransform.offsetMin;
+            offsetMin.y = waterTransform.offsetMin.y;
+            sodaTransform.offsetMin = offsetMin;
+        }
+
+        void HandleLava()
+        {
+            // Set target when pour stops (only once)
+            if (!isPoured && !lavaTargetSet && waterTransform.localScale.y > 0f)
+            {
+                lavaTargetSet = true;
+                lavaTargetScale = waterTransform.localScale.y - 0.1f;
+                lavaTargetScale = Mathf.Max(lavaTargetScale, 0f);
+            }
+            
+            // Slowly decrease water to target after pour stops
+            if (!isPoured && waterTransform.localScale.y > lavaTargetScale)
+            {
+                float newScale = waterTransform.localScale.y - lavaDecreaseRate * Time.deltaTime;
+                newScale = Mathf.Max(newScale, lavaTargetScale);
+                waterTransform.localScale = new Vector3(1f, newScale, 1f);
+            }
         }
 
         public WinState GetWinState()

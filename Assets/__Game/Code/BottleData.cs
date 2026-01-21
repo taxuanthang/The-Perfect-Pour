@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [System.Serializable]
 public class BottleData
 {
+    public WaterType waterType = WaterType.Normal;
     public Sprite bottle;
     public Sprite layer;
     public float redSize1 = 15f;

@@ -42,6 +42,16 @@ public class Water : MonoBehaviour
                 flowSpeed = 1f;
                 rigidbody2D.gravityScale = 80;
                 break;
+            case WaterType.Soda:
+                fillSpeed = 0.6f;
+                flowSpeed = 2.5f;
+                rigidbody2D.gravityScale = 70f;
+                break;
+            case WaterType.Lava:
+                fillSpeed = 0.5f;
+                flowSpeed = 1.5f;
+                rigidbody2D.gravityScale = 90f;
+                break;
         }
     }
 
@@ -94,6 +104,9 @@ public enum WaterType
 {
     Normal,
     Honey,
+    Soda,
+    Lava
+
 }
 
 public enum FaucetType

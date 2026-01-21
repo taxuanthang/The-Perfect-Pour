@@ -30,3 +30,4 @@ MonoBehaviour:
     Size: 0.5
   - speed: 1
     Size: 0.7
+  waterType: 3
