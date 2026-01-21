@@ -1229,7 +1229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPlayerData:
-    levelConfigIndex: 1
+    levelConfigIndex: 3
     lastPlayTime: 1/13/2026 10:42:47 PM
     money: 800
     life: 5

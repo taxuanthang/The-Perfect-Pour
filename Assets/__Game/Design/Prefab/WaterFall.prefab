@@ -103,12 +103,12 @@ MonoBehaviour:
   waterType: 0
   waterMaterial: {fileID: 2100000, guid: 20e949fdf1d100e44bfeca12b9c370ae, type: 2}
   waterImage: {fileID: 4366451317886293169}
-  waterSprite: {fileID: 21300000, guid: 20a7ec37af1ad1342a7c5bfcb9019623, type: 3}
-  milkSprite: {fileID: 21300000, guid: 989a674ba80b12845aa60c5c913d1405, type: 3}
-  juiceSprite: {fileID: 21300000, guid: eb2b9fb678a93514791eb4c7759146ff, type: 3}
+  waterSprite: {fileID: 21300000, guid: e09cd8963c2375e4fb56a12bcbae3803, type: 3}
+  milkSprite: {fileID: 21300000, guid: c272e0aa933c6cc488753d2fefc5a952, type: 3}
+  juiceSprite: {fileID: 21300000, guid: 65b3d35ddf5298348b3dcb9581c0cad0, type: 3}
   sodaSprite: {fileID: 21300000, guid: 8560f16453847234a914eabe42067bcc, type: 3}
-  redwineSprite: {fileID: 21300000, guid: 247958fe952a7fb4f97371e22ef7ae3c, type: 3}
-  paintSprite: {fileID: 21300000, guid: 9d9cd6e01031ec94bacf8cbfb14ec9b8, type: 3}
+  redwineSprite: {fileID: 21300000, guid: 057b3f285db987544a13dc441ad0c743, type: 3}
+  paintSprite: {fileID: 21300000, guid: 3fff85fa78138af4ab66cc9b3d080117, type: 3}
   rigidbody2D: {fileID: 0}
   fillSpeed: 0.7
   flowSpeed: 2

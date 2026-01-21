@@ -130,16 +130,16 @@ namespace Game
 
             Sprite paddedImage = SpritePadder.PadSprite(
                 levelData.bottle,
-                562,     // khung mới
-                562,
+                700,     // khung mới
+                700,
                 AnchorMode.Bottom   // ví dụ: đặt ảnh ở đáy
             );
 
 
             Sprite paddedImage2 = SpritePadder.PadSprite(
                 levelData.layer,
-                562,     // khung mới
-                562,
+                700,     // khung mới
+                700,
                 AnchorMode.Bottom   // ví dụ: đặt ảnh ở đáy
             );
 
