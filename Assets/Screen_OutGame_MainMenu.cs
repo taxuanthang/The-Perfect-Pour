@@ -14,6 +14,7 @@ public class Screen_OutGame_MainMenu : Screen
 
     [Header("Bottom")]
     [SerializeField] Button levelButton;
+    [SerializeField] Level _levelUI;
 
 
 
@@ -49,7 +50,7 @@ public class Screen_OutGame_MainMenu : Screen
 
             string moneyValue = playerData.money.ToString();
             _coinUI.UpdateCoin(moneyValue);
-
+            _levelUI.UpdateLevel(playerData.levelConfigIndex.ToString());
 
         }
 

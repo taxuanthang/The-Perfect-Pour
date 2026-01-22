@@ -8,6 +8,7 @@ public class Screen_InGame_MainGameplay : Screen
     [SerializeField] Button _pauseButton;
     [SerializeField] Button _replayButton;
     [SerializeField] Coin _coinUI;
+    [SerializeField] Level _levelUI;
     [SerializeField] TextMeshProUGUI _levelText;
 
 
@@ -39,6 +40,7 @@ public class Screen_InGame_MainGameplay : Screen
         {
             string moneyValue = playerData.money.ToString();
             _coinUI.UpdateCoin(moneyValue);
+            _levelUI.UpdateLevel(playerData.levelConfigIndex.ToString());
             //_levelText.text = $"Level {playerData.levelConfigIndex.ToString()}";
         }
 

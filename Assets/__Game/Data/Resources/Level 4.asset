@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6623c8abe6955124bbeaf3597df89825, type: 3}
   m_Name: Level 4
   m_EditorClassIdentifier: 
-  bottle: {fileID: 274298586, guid: 283218f9b67cbce4db3cdf4a28b5db78, type: 3}
-  layer: {fileID: -1004797186, guid: 2487f60c90439944ea1c12366d69b3c1, type: 3}
+  bottle: {fileID: 1304436410, guid: 37cce38bdd33fe24a89a58db1757840c, type: 3}
+  layer: {fileID: 249905801, guid: a52bcffd75b30df4ebd322f0e97eccb0, type: 3}
   bottleTargetName: Bottle
   faucetType: 0
   waterType: 1
