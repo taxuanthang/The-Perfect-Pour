@@ -65,8 +65,12 @@ namespace Game
         [Header("Lava Settings")]
         [SerializeField]
         float lavaDecreaseRate = 0.05f;
+        [SerializeField]
+        [Range(0f, 1f)]
+        float lavaDecreasePercent = 0.1f; // 100% of droplet increase
         float lavaTargetScale = 0f;
-        bool lavaTargetSet = false;
+        bool lavaDecreaseStarted = false;
+        float dropletIncreaseTotal = 0f;
 
         public void Awake()
         {
@@ -228,16 +232,8 @@ namespace Game
 
         void HandleLava()
         {
-            // Set target when pour stops (only once)
-            if (!isPoured && !lavaTargetSet && waterTransform.localScale.y > 0f)
-            {
-                lavaTargetSet = true;
-                lavaTargetScale = waterTransform.localScale.y - 0.1f;
-                lavaTargetScale = Mathf.Max(lavaTargetScale, 0f);
-            }
-            
-            // Slowly decrease water to target after pour stops
-            if (!isPoured && waterTransform.localScale.y > lavaTargetScale)
+            // Slowly decrease water to target after all droplets are done
+            if (lavaDecreaseStarted && waterTransform.localScale.y > lavaTargetScale)
             {
                 float newScale = waterTransform.localScale.y - lavaDecreaseRate * Time.deltaTime;
                 newScale = Mathf.Max(newScale, lavaTargetScale);
@@ -286,7 +282,26 @@ namespace Game
 
         public void CreateDelayWater()
         {
-            waterTransform.localScale += new Vector3(0, increaseAmount, 0) * 0.3f;
+            float dropletIncrease = increaseAmount * 0.3f;
+            waterTransform.localScale += new Vector3(0, dropletIncrease, 0);
+            
+            // Track total droplet increase for lava
+            if (data.waterType == WaterType.Lava)
+            {
+                dropletIncreaseTotal += dropletIncrease;
+            }
+        }
+
+        public void StartLavaDecrease()
+        {
+            // Start lava decrease by percentage of total water level
+            if (data.waterType == WaterType.Lava && !lavaDecreaseStarted && waterTransform.localScale.y > 0f)
+            {
+                lavaDecreaseStarted = true;
+                float decreaseAmount = waterTransform.localScale.y * lavaDecreasePercent;
+                lavaTargetScale = waterTransform.localScale.y - decreaseAmount;
+                lavaTargetScale = Mathf.Max(lavaTargetScale, 0f);
+            }
         }
     }
 }

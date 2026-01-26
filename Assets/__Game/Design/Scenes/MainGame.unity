@@ -3809,6 +3809,7 @@ MonoBehaviour:
   speed: 1
   foamDecreaseRate: 0.12
   lavaDecreaseRate: 0.05
+  lavaDecreasePercent: 0.1
 --- !u!1001 &1573128920
 PrefabInstance:
   m_ObjectHideFlags: 0

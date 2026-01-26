@@ -218,9 +218,12 @@ namespace Game
 
                 for (int i = 0; i < repeatTime; i++)
                 {
-                    CreateWater();   // ❗ chờ xong mới spawn tiếp
+                    await CreateWater();   // ❗ chờ xong mới spawn tiếp
                     await Task.Delay(400, cancellationToken: waterCTS.Token);
                 }
+
+                // Start lava decrease after all droplets are done
+                _bottle.StartLavaDecrease();
             }
             catch (OperationCanceledException) { }
         }
