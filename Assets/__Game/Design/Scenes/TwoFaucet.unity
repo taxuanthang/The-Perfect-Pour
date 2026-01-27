@@ -1067,11 +1067,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterPrefabs: {fileID: 4186981217569779205, guid: 5345b35056f370b4cac8d7f384c461f2, type: 3}
+  waterDropPrefabs: {fileID: 5823223380290784098, guid: a9c17ff32137bb448b5de90e23d2f456, type: 3}
   isPoured: 0
   createWaterPerSecond: 0.01
   waterCreatePos: {fileID: 1379118262}
   count: 0
   randomRange: 10
+  faucetType: 0
+  water: {fileID: 0}
 --- !u!1 &928586867
 GameObject:
   m_ObjectHideFlags: 0
@@ -1692,7 +1695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _presenter: {fileID: 2066849150}
-  _isPlaying: 0
+  isPaused: 0
 --- !u!1 &1564893934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1787,6 +1790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     bottle: {fileID: 0}
+    layer: {fileID: 0}
     redSize1: 15
     yellowSize1: 20
     greenSize: 30
@@ -1795,6 +1799,8 @@ MonoBehaviour:
     goal: 80
     listIncreasing: []
   isPoured: 0
+  bottleImage: {fileID: 0}
+  mask: {fileID: 0}
   waterTransform: {fileID: 1696322908}
   bottleTransform: {fileID: 1564893935}
   goalTransform: {fileID: 176832425}
@@ -2521,6 +2527,9 @@ MonoBehaviour:
   _bottle: {fileID: 1564893938}
   _faucet: {fileID: 907487802}
   _levelLoader: {fileID: 1700925961}
+  _uiManager: {fileID: 0}
+  _playerManager: {fileID: 0}
+  _mainManager: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

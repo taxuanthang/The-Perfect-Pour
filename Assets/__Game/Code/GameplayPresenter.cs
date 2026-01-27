@@ -257,6 +257,9 @@ namespace Game
                     }
 
                 }
+
+                // Start lava decrease after all droplets are done
+                _bottle.StartLavaDecrease();
             }
             catch (OperationCanceledException) { }
         }
