@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7022814091619632140}
   - component: {fileID: 4073037894029402119}
   - component: {fileID: 6838065793773004963}
-  - component: {fileID: 4366451317886293169}
   m_Layer: 5
   m_Name: WaterFall
   m_TagString: Untagged
@@ -32,7 +31,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2943967047274016798}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.45, y: 0}
@@ -102,25 +102,70 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterType: 0
   waterMaterial: {fileID: 2100000, guid: 20e949fdf1d100e44bfeca12b9c370ae, type: 2}
-  waterImage: {fileID: 4366451317886293169}
+  waterImage: {fileID: 1877799732265103991}
   waterSprite: {fileID: 21300000, guid: e09cd8963c2375e4fb56a12bcbae3803, type: 3}
   milkSprite: {fileID: 21300000, guid: c272e0aa933c6cc488753d2fefc5a952, type: 3}
   juiceSprite: {fileID: 21300000, guid: 65b3d35ddf5298348b3dcb9581c0cad0, type: 3}
   sodaSprite: {fileID: 21300000, guid: 8560f16453847234a914eabe42067bcc, type: 3}
   redwineSprite: {fileID: 21300000, guid: 057b3f285db987544a13dc441ad0c743, type: 3}
   paintSprite: {fileID: 21300000, guid: 3fff85fa78138af4ab66cc9b3d080117, type: 3}
-  rigidbody2D: {fileID: 0}
+  rigidbody2D: {fileID: 7022814091619632140}
   fillSpeed: 0.7
   flowSpeed: 2
   flag: 0
   destroyAfterSeconds: {fileID: 4073037894029402119}
---- !u!114 &4366451317886293169
+--- !u!1 &4499907102801396864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2943967047274016798}
+  - component: {fileID: 3057916021025763234}
+  - component: {fileID: 1877799732265103991}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2943967047274016798
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4499907102801396864}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8824665219293395466}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3057916021025763234
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4499907102801396864}
+  m_CullTransparentMesh: 1
+--- !u!114 &1877799732265103991
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3911081263224807280}
+  m_GameObject: {fileID: 4499907102801396864}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}

@@ -43,10 +43,15 @@ public class Water : MonoBehaviour
         destroyAfterSeconds = GetComponent<DestroyAfterSeconds>();
     }
 
-
+    private void Update()
+    {
+        print(waterImage.fillAmount);
+    }
     public void SetUp(WaterType waterType,FaucetType faucetType)
     {
-        waterImage.fillAmount = 0;
+        waterImage.type = Image.Type.Filled;
+        waterImage.fillAmount = 0.3f;
+        Debug.Log("Set fill về 0");
         rigidbody2D.bodyType = RigidbodyType2D.Static;
         destroyAfterSeconds.enabled = false;
         flag = false;
@@ -117,40 +122,36 @@ public class Water : MonoBehaviour
 
     public void StopPour()
     {
-        if (waterImage.fillAmount <= 0f)
-        {
-            return;
-        }
-        if (!flag)
-        {
-            flag = true;
-            rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-            destroyAfterSeconds.enabled = true;
-        }
+        //if (waterImage.fillAmount <= 0f)
+        //{
+        //    return;
+        //}
+        //if (!flag)
+        //{
+        //    flag = true;
+        //    rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+        //    destroyAfterSeconds.enabled = true;
+        //}
 
     }
 
 
     public void MovingWater()
     {
-        waterImage.fillOrigin = fillOrigin;
-        // 1️⃣ Nước dâng / hạ mượt
-        current = Mathf.MoveTowards(
-            current,
-            target,
-           fillSpeed *Time.deltaTime
-        );
-        waterImage.fillAmount = current;
-        // 2️⃣ UV scroll giả lập nước chảy
-        Vector2 offset = waterMaterial.mainTextureOffset;
-        offset += new Vector2(0, flowSpeed * Time.deltaTime);
-        waterMaterial.mainTextureOffset = offset;
+        //waterImage.fillOrigin = fillOrigin;
+        //// 1️⃣ Nước dâng / hạ mượt
+        //current = Mathf.MoveTowards(
+        //    current,
+        //    target,
+        //   fillSpeed *Time.deltaTime
+        //);
+        //waterImage.fillAmount = current;
+        //// 2️⃣ UV scroll giả lập nước chảy
+        //Vector2 offset = waterMaterial.mainTextureOffset;
+        //offset += new Vector2(0, flowSpeed * Time.deltaTime);
+        //waterMaterial.mainTextureOffset = offset;
     }
 
-    public void Reset()
-    {
-        flowSpeed = 1f;
-    }
 }
 
 
