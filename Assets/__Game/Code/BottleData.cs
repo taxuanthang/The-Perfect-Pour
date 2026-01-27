@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class BottleData
 {
-    public WaterType waterType = WaterType.Normal;
+    public WaterType waterType ;
     public Sprite bottle;
     public Sprite layer;
     public float redSize1 = 15f;
@@ -13,8 +13,6 @@ public class BottleData
     public float greenSize = 30f;
     public float yellowSize2 = 20f;
     public float redSize2 = 15f;
-
-    public WaterType waterType;
     public float goal = 80f;
 
     public List<SpeedIncreasing> listIncreasing;

@@ -23,9 +23,6 @@ namespace Game
         Image waterImage;
 
         [SerializeField]
-        Image waterImage;
-
-        [SerializeField]
         RectTransform sodaTransform;
 
         [SerializeField]
@@ -169,7 +166,7 @@ namespace Game
                     case WaterType.Soda:
                         waterImage.color = new Color(0.4f, 0.26f, 0.13f, 1f); // Brown
                         break;
-                    case WaterType.Lava:
+                    case WaterType.Paint:
                         waterImage.color = new Color(1f, 0.5f, 0f, 1f); // Orange
                         break;
                     default:
@@ -229,7 +226,7 @@ namespace Game
                 case WaterType.Soda:
                     HandleSoda();
                     break;
-                case WaterType.Lava:
+                case WaterType.Paint:
                     HandleLava();
                     break;
                 default:
@@ -313,7 +310,7 @@ namespace Game
             waterTransform.localScale += new Vector3(0, dropletIncrease, 0);
             
             // Track total droplet increase for lava
-            if (data.waterType == WaterType.Lava)
+            if (data.waterType == WaterType.Paint)
             {
                 dropletIncreaseTotal += dropletIncrease;
             }
@@ -322,7 +319,7 @@ namespace Game
         public void StartLavaDecrease()
         {
             // Start lava decrease by percentage of total water level
-            if (data.waterType == WaterType.Lava && !lavaDecreaseStarted && waterTransform.localScale.y > 0f)
+            if (data.waterType == WaterType.Paint && !lavaDecreaseStarted && waterTransform.localScale.y > 0f)
             {
                 lavaDecreaseStarted = true;
                 float decreaseAmount = waterTransform.localScale.y * lavaDecreasePercent;

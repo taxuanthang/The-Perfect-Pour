@@ -21,6 +21,4 @@ public class LevelData : ScriptableObject
     public float goal = 0.65f;
 
     public List<SpeedIncreasing> listIncreasing;
-
-    public WaterType waterType = WaterType.Normal;
 }

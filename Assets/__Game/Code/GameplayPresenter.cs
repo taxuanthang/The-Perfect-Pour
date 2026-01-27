@@ -158,7 +158,6 @@ namespace Game
                 goal = levelData.goal,
 
                 listIncreasing = levelData.listIncreasing,
-                waterType = levelData.waterType
             };
 
             _faucet.SetUp(levelData.waterType,levelData.faucetType);
