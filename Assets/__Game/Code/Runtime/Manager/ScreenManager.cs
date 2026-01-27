@@ -18,7 +18,7 @@ public enum ScreenName
 
     //InGame
     InGame_GamePlay,
-
+    InGame_Win,
 }
 
 public struct NavigationData
@@ -30,10 +30,11 @@ public struct NavigationData
 public class ScreenManager : MonoBehaviour
 {
     [Header("Out_Game")]
-    [SerializeField] public Screen screen_OutGame_MainMenu;
+    [SerializeField] public Screen mainMenu_OutGame_Screen;
 
     [Header("In_Game")]
-    [SerializeField] public Screen sceen_InGame_MainGameplay;
+    [SerializeField] public Screen mainGameplay_InGame_Screen;
+    [SerializeField] public Screen win_InGame_Screen;
 
     //Act as a curtain
     [SerializeField] private int pauseTime = 1;
@@ -42,10 +43,6 @@ public class ScreenManager : MonoBehaviour
     private Stack<NavigationData> screenStack = new Stack<NavigationData>();
     private Dictionary<ScreenName, Screen> screenDictionary = new Dictionary<ScreenName, Screen>();
 
-    public void ActiveWinUI()
-    {
-
-    }
 
     public void ActiveLoseUI(object data = null)
     {
@@ -59,11 +56,12 @@ public class ScreenManager : MonoBehaviour
     public void RegisterDictionary()
     {
         //OutGame
-        screenDictionary.Add(ScreenName.OutGame_MainMenu, screen_OutGame_MainMenu);
+        screenDictionary.Add(ScreenName.OutGame_MainMenu, mainMenu_OutGame_Screen);
 
 
         //InGame
-        screenDictionary.Add(ScreenName.InGame_GamePlay, sceen_InGame_MainGameplay);
+        screenDictionary.Add(ScreenName.InGame_GamePlay, mainGameplay_InGame_Screen);
+        screenDictionary.Add(ScreenName.InGame_Win, win_InGame_Screen);
 
 
         //Pop-Up

@@ -91,6 +91,10 @@ public class LevelEditorWindow : EditorWindow
         EditorGUILayout.LabelField("BOTTLE IN SCENE", EditorStyles.boldLabel);
         level.bottleTargetName = EditorGUILayout.TextField("Bottle Object Name", level.bottleTargetName);
 
+
+        level.waterType = (WaterType)EditorGUILayout.EnumPopup("Water Type", level.waterType);
+        level.faucetType = (FaucetType)EditorGUILayout.EnumPopup("Faucet Type", level.faucetType);
+
         EditorGUILayout.HelpBox(
             "Script sẽ tự tìm GameObject có tên chính xác như trên trong scene và thay sprite.\n" +
             "Ví dụ: 'Bottle', 'Goal', 'Bottle_Level2'...\n" +

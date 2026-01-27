@@ -6,16 +6,15 @@ using UnityEngine.UI;
 public class Screen_OutGame_MainMenu : Screen
 {
     [Header("Top")]
-    [SerializeField] Button setingButon;
+    [SerializeField] Button _settingsButton;
+    [SerializeField] Button _shopButton;
+    [SerializeField] Coin _coinUI;
 
     [Header("Pages")]
 
     [Header("Bottom")]
     [SerializeField] Button levelButton;
-    [SerializeField] Button shopButton;
-
-    [SerializeField] Button coinBtn;
-    public TextMeshProUGUI coinText;
+    [SerializeField] Level _levelUI;
 
 
 
@@ -48,12 +47,10 @@ public class Screen_OutGame_MainMenu : Screen
             //cập nhật máu
 
             //cập nhật vàng--Ok bro
-            if (data is PlayerData playerData2)
-            {
-                string content = playerData.money.ToString();
-                coinText.text = content;
 
-            }
+            string moneyValue = playerData.money.ToString();
+            _coinUI.UpdateCoin(moneyValue);
+            _levelUI.UpdateLevel(playerData.levelConfigIndex.ToString());
 
         }
 

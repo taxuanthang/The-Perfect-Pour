@@ -1,5 +1,4 @@
-namespace Game
-{
+
     public class GameEvent
     {
         public const string OnCliked = "GameEvent.OnCliked";
@@ -9,5 +8,4 @@ namespace Game
         internal static string ENTER_GAME = "GameEvent.ENTER_GAME";
         internal static string NEW_GAME = "GameEvent.NEW_GAME";
     }
-}
 

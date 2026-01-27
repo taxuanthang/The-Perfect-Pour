@@ -12,22 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6623c8abe6955124bbeaf3597df89825, type: 3}
   m_Name: Level 1
   m_EditorClassIdentifier: 
-  bottle: {fileID: 1219333666, guid: e5ceb8b33a3600e4981acc90bdd2951a, type: 3}
-  layer: {fileID: -1045557452, guid: 499a09517e7bd6644ae0f290ad8504af, type: 3}
+  bottle: {fileID: 1304436410, guid: 37cce38bdd33fe24a89a58db1757840c, type: 3}
+  layer: {fileID: 249905801, guid: a52bcffd75b30df4ebd322f0e97eccb0, type: 3}
   bottleTargetName: Bottle
+  faucetType: 0
+  waterType: 0
   redSize1: 1
   yellowSize1: 0.8
-  greenSize: 0.7
+  greenSize: 0.75
   yellowSize2: 0.5
   redSize2: 0.3
-  goal: 0.65
-  listIncreasing:
-  - speed: 0
-    Size: 0.2
-  - speed: 1
-    Size: 0.3
-  - speed: 0
-    Size: 0.5
-  - speed: 1
-    Size: 0.7
-  waterType: 3
+  goal: 0.7
+  listIncreasing: []

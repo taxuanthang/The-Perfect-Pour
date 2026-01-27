@@ -5,14 +5,10 @@ using UnityEngine.UI;
 public class Screen_InGame_MainGameplay : Screen
 {
     //TOp
-    [SerializeField] Button _settingButton;
-
-    [SerializeField] Button _coinBtn;
-    [SerializeField] TextMeshProUGUI _coinText;
-    [SerializeField] TextMeshProUGUI _numberOfPigsOnBelt;
-
-
-
+    [SerializeField] Button _pauseButton;
+    [SerializeField] Button _replayButton;
+    [SerializeField] Coin _coinUI;
+    [SerializeField] Level _levelUI;
     [SerializeField] TextMeshProUGUI _levelText;
 
 
@@ -42,8 +38,9 @@ public class Screen_InGame_MainGameplay : Screen
     {
         if (Data is PlayerData playerData)
         {
-            //string content = playerData.money.ToString();
-            //_coinText.text = content;
+            string moneyValue = playerData.money.ToString();
+            _coinUI.UpdateCoin(moneyValue);
+            _levelUI.UpdateLevel(playerData.levelConfigIndex.ToString());
             //_levelText.text = $"Level {playerData.levelConfigIndex.ToString()}";
         }
 

@@ -1,4 +1,5 @@
-﻿using Kuchen;
+﻿using Game;
+using Kuchen;
 using System;
 using UnityEngine;
 
@@ -61,11 +62,26 @@ using UnityEngine;
 
         public int GetLevelIndex() => currentPlayerData.levelConfigIndex;
 
-        public void OnWin()
+        public void OnWin(WinState winState)
         {
             currentPlayerData.life = Mathf.Min(currentPlayerData.life + 1, MAX_LIFE); //tăng máu khi win
             currentPlayerData.levelConfigIndex++;
-            AdjustCoin(40);  // money always incresase 40 when win (for all level)--> magic number 
+
+            switch (winState)
+            {
+                case WinState.None:
+                    break;
+                case WinState.Green:
+                    AdjustCoin(40);  // money always incresase 40 when win (for all level)--> magic number 
+                    break;
+                case WinState.Yellow:
+                    AdjustCoin(20);  // money always incresase 40 when win (for all level)--> magic number 
+                    break;
+                case WinState.Red:
+                    AdjustCoin(0);  // money always incresase 40 when win (for all level)--> magic number 
+                    break;
+
+            }
 
             _currentLvLostCount = 0;
         }

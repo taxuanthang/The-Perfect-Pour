@@ -11,6 +11,19 @@ public class Water : MonoBehaviour
     Image waterImage;
 
     [SerializeField]
+    Sprite waterSprite;
+    [SerializeField]
+    Sprite milkSprite;
+    [SerializeField]
+    Sprite juiceSprite;
+    [SerializeField]
+    Sprite sodaSprite;
+    [SerializeField]
+    Sprite redwineSprite;
+    [SerializeField]
+    Sprite paintSprite;
+
+    [SerializeField]
     Rigidbody2D rigidbody2D;
     [SerializeField]
     private float fillSpeed = 1f;
@@ -20,27 +33,73 @@ public class Water : MonoBehaviour
     private float current;
     private float target;
 
+    public bool flag = false;
+    [SerializeField]
+    private DestroyAfterSeconds destroyAfterSeconds;
+
     public void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        destroyAfterSeconds = GetComponent<DestroyAfterSeconds>();
     }
 
 
-    public void Start()
+    public void SetUp(WaterType waterType,FaucetType faucetType)
     {
         waterImage.fillAmount = 0;
         rigidbody2D.bodyType = RigidbodyType2D.Static;
+        destroyAfterSeconds.enabled = false;
+        flag = false;
+        waterMaterial.mainTextureOffset = new Vector2(0, 0);
+
+        this.waterType = waterType;
         switch (waterType)
         {
-            case WaterType.Normal:
+            case WaterType.Water:
                 fillSpeed = 0.7f;
                 flowSpeed = 2f;
                 rigidbody2D.gravityScale = 100f;
+                waterMaterial.mainTexture = waterSprite.texture;
                 break;
-            case WaterType.Honey:
+            case WaterType.Milk:
                 fillSpeed = 0.3f;
                 flowSpeed = 1f;
                 rigidbody2D.gravityScale = 80;
+                waterMaterial.mainTexture = milkSprite.texture;
+                break;
+            case WaterType.Juice:
+                fillSpeed = 0.3f;
+                flowSpeed = 1f;
+                rigidbody2D.gravityScale = 80;
+                waterMaterial.mainTexture = juiceSprite.texture;
+                break;
+            case WaterType.Soda:
+                fillSpeed = 0.3f;
+                flowSpeed = 1f;
+                rigidbody2D.gravityScale = 80;
+                waterMaterial.mainTexture = sodaSprite.texture;
+                break;
+            case WaterType.RedWine:
+                fillSpeed = 0.3f;
+                flowSpeed = 1f;
+                rigidbody2D.gravityScale = 80;
+                waterMaterial.mainTexture = redwineSprite.texture;
+                break;
+            case WaterType.Paint:
+                fillSpeed = 0.3f;
+                flowSpeed = 1f;
+                rigidbody2D.gravityScale = 80;
+                waterMaterial.mainTexture = paintSprite.texture;
+                break;
+
+        }
+        switch (faucetType)
+        {
+            case FaucetType.Normal:
+                flowSpeed *= 1;
+                break;
+            case FaucetType.X2:
+                flowSpeed *= 2;
                 break;
             case WaterType.Soda:
                 fillSpeed = 0.6f;
@@ -65,8 +124,6 @@ public class Water : MonoBehaviour
         MovingWater();
     }
 
-    bool flag =false;
-
     public void StopPour()
     {
         if (waterImage.fillAmount <= 0f)
@@ -77,6 +134,7 @@ public class Water : MonoBehaviour
         {
             flag = true;
             rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+            destroyAfterSeconds.enabled = true;
         }
 
     }
@@ -92,25 +150,16 @@ public class Water : MonoBehaviour
            fillSpeed *Time.deltaTime
         );
         waterImage.fillAmount = current;
-
         // 2️⃣ UV scroll giả lập nước chảy
         Vector2 offset = waterMaterial.mainTextureOffset;
         offset += new Vector2(0, flowSpeed * Time.deltaTime);
         waterMaterial.mainTextureOffset = offset;
     }
+
+    public void Reset()
+    {
+        flowSpeed = 1f;
+    }
 }
 
-public enum WaterType
-{
-    Normal,
-    Honey,
-    Soda,
-    Lava
 
-}
-
-public enum FaucetType
-{
-    Normal,
-    Honey,
-}

@@ -26,18 +26,10 @@ public class LevelLoader : MonoBehaviour
         }
 
         //GamePlayPresenter.instance.onLoadLevelDataComplete(levelToLoad);
-        LoadLevel();
 
     }
 
-    public void LoadLevel()
-    {
-        if (data == null) return;
 
-
-
-
-    }
 
     public LevelData GetCurrentLevelData() => data;
 

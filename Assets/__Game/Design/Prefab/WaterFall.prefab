@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8824665219293395466}
   - component: {fileID: 603600107146083770}
-  - component: {fileID: 3672559026149100231}
   - component: {fileID: 7022814091619632140}
   - component: {fileID: 4073037894029402119}
   - component: {fileID: 6838065793773004963}
+  - component: {fileID: 4366451317886293169}
   m_Layer: 5
   m_Name: WaterFall
   m_TagString: Untagged
@@ -28,18 +28,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3911081263224807280}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.4, y: 0}
-  m_AnchorMax: {x: 0.6, y: 0.2}
+  m_AnchorMin: {x: 0.45, y: 0}
+  m_AnchorMax: {x: 0.55, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &603600107146083770
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -48,36 +48,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3911081263224807280}
   m_CullTransparentMesh: 1
---- !u!114 &3672559026149100231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3911081263224807280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.97092485, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!50 &7022814091619632140
 Rigidbody2D:
   serializedVersion: 5
@@ -86,7 +56,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3911081263224807280}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -112,7 +82,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3911081263224807280}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04f3b76d68baef34295f944a43846038, type: 3}
   m_Name: 
@@ -131,4 +101,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterType: 0
+  waterMaterial: {fileID: 2100000, guid: 20e949fdf1d100e44bfeca12b9c370ae, type: 2}
+  waterImage: {fileID: 4366451317886293169}
+  waterSprite: {fileID: 21300000, guid: e09cd8963c2375e4fb56a12bcbae3803, type: 3}
+  milkSprite: {fileID: 21300000, guid: c272e0aa933c6cc488753d2fefc5a952, type: 3}
+  juiceSprite: {fileID: 21300000, guid: 65b3d35ddf5298348b3dcb9581c0cad0, type: 3}
+  sodaSprite: {fileID: 21300000, guid: 8560f16453847234a914eabe42067bcc, type: 3}
+  redwineSprite: {fileID: 21300000, guid: 057b3f285db987544a13dc441ad0c743, type: 3}
+  paintSprite: {fileID: 21300000, guid: 3fff85fa78138af4ab66cc9b3d080117, type: 3}
   rigidbody2D: {fileID: 0}
+  fillSpeed: 0.7
+  flowSpeed: 2
+  flag: 0
+  destroyAfterSeconds: {fileID: 4073037894029402119}
+--- !u!114 &4366451317886293169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3911081263224807280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 20e949fdf1d100e44bfeca12b9c370ae, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: e09cd8963c2375e4fb56a12bcbae3803, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 1
+  m_FillAmount: 1
+  m_FillClockwise: 0
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1

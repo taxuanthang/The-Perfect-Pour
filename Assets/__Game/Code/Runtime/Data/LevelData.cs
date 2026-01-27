@@ -9,7 +9,10 @@ public class LevelData : ScriptableObject
 
     [Header("Scene Bottle Settings")]
     public string bottleTargetName = "Bottle"; // Tên GameObject chứa Image chai trong scene
+    public FaucetType faucetType;
+    public WaterType waterType;
 
+    [Header("Bottle Settings")]
     public float redSize1 = 1f;
     public float yellowSize1 = 0.8f;
     public float greenSize = 0.7f;

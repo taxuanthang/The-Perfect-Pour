@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6623c8abe6955124bbeaf3597df89825, type: 3}
+  m_Name: Level 7
+  m_EditorClassIdentifier: 
+  bottle: {fileID: 1304436410, guid: 37cce38bdd33fe24a89a58db1757840c, type: 3}
+  layer: {fileID: 249905801, guid: a52bcffd75b30df4ebd322f0e97eccb0, type: 3}
+  bottleTargetName: Bottle
+  faucetType: 1
+  waterType: 0
+  redSize1: 1
+  yellowSize1: 0.8
+  greenSize: 0.6
+  yellowSize2: 0.45
+  redSize2: 0.3
+  goal: 0.5
+  listIncreasing: []

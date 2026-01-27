@@ -19,6 +19,8 @@ namespace Game
 
         [SerializeField]
         RectTransform waterTransform;
+        [SerializeField]
+        Image waterImage;
 
         [SerializeField]
         Image waterImage;
@@ -34,7 +36,7 @@ namespace Game
 
         [Header("goalLevel")]
         [SerializeField]
-        GameObject GoalSize;
+        GameObject goalSize;
         [SerializeField]
         RectTransform redSize1;
 
@@ -92,7 +94,31 @@ namespace Game
 
         public void GenerateLevel(BottleData data)
         {
+            ResetWaterLevel();
+
             this.data = data;
+
+            switch(data.waterType)
+            {
+                case WaterType.Water:
+                    waterImage.color = Color.blue;
+                    break;
+                case WaterType.Milk:
+                    waterImage.color = Color.white;
+                    break;
+                case WaterType.Juice:
+                    waterImage.color = new Color(1f, 0.6092079f,0f,1f);
+                    break;
+                case WaterType.RedWine:
+                    waterImage.color = Color.red;
+                    break;
+                case WaterType.Soda:
+                    waterImage.color = Color.cyan;
+                    break;
+                case WaterType.Paint:
+                    waterImage.color = Color.green;
+                    break;
+            }
 
             bottleImage.sprite = data.bottle;
             mask.sprite = data.layer;
@@ -110,6 +136,7 @@ namespace Game
             redSize2.localScale = new Vector3(1f, data.redSize2, 1f);
 
             // SET GOAL
+            SetGoalActive(false);
             float greenZoneHeight = bottleHeight * (data.greenSize - data.yellowSize2);
 
             goalTransform.SetSizeWithCurrentAnchors(
@@ -302,6 +329,16 @@ namespace Game
                 lavaTargetScale = waterTransform.localScale.y - decreaseAmount;
                 lavaTargetScale = Mathf.Max(lavaTargetScale, 0f);
             }
+        }
+
+        public void ResetWaterLevel()
+        {
+            waterTransform.localScale = new Vector3(1f, 0f, 1f);
+        }
+
+        public void SetGoalActive(bool active)
+        {
+            goalSize.SetActive(active);
         }
     }
 }
