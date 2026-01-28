@@ -76,7 +76,43 @@ namespace Game
 
             //int currentHealth = _playerManager.UpdateFromOffline();
 
-            GenerateLevel();
+            //
+            var levelData = _levelLoader.GetLevelData();
+
+            Sprite paddedImage = SpritePadder.PadSprite(
+                levelData.bottle,
+                700,     // khung mới
+                700,
+                AnchorMode.Bottom   // ví dụ: đặt ảnh ở đáy
+            );
+
+
+            Sprite paddedImage2 = SpritePadder.PadSprite(
+                levelData.layer,
+                700,     // khung mới
+                700,
+                AnchorMode.Bottom   // ví dụ: đặt ảnh ở đáy
+            );
+
+            var bottleData = new BottleData()
+            {
+                bottle = paddedImage,
+                layer = paddedImage2,
+                redSize1 = levelData.redSize1,
+                yellowSize1 = levelData.yellowSize1,
+                greenSize = levelData.greenSize,
+                yellowSize2 = levelData.yellowSize2,
+                redSize2 = levelData.redSize2,
+
+                waterType = levelData.waterType,
+
+                goal = levelData.goal,
+
+                listIncreasing = levelData.listIncreasing,
+            };
+
+            _bottle.GenerateLevel(bottleData);
+            //
 
 
         }
@@ -130,16 +166,16 @@ namespace Game
 
             Sprite paddedImage = SpritePadder.PadSprite(
                 levelData.bottle,
-                700,     // khung mới
-                700,
+                750,     // khung mới
+                750,
                 AnchorMode.Bottom   // ví dụ: đặt ảnh ở đáy
             );
 
 
             Sprite paddedImage2 = SpritePadder.PadSprite(
                 levelData.layer,
-                700,     // khung mới
-                700,
+                750,     // khung mới
+                750,
                 AnchorMode.Bottom   // ví dụ: đặt ảnh ở đáy
             );
 
@@ -164,6 +200,8 @@ namespace Game
 
             _bottle.GenerateLevel(bottleData);
         }
+
+
 
         bool triggerOnce = false;
 
