@@ -81,7 +81,7 @@ Material:
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
     - _Surface: 1
-    - _Threshold: 0.5
+    - _Threshold: 0.24
     - _UseUIAlphaClip: 0
     - _XRMotionVectorsPass: 1
     - _ZTest: 4
