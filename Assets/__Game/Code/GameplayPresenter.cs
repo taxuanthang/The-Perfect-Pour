@@ -79,18 +79,18 @@ namespace Game
             //
             var levelData = _levelLoader.GetLevelData();
 
-            Sprite paddedImage = SpritePadder.PadSprite(
+            Sprite paddedImage = SpriteScaler.ScaleAndPadSprite(
                 levelData.bottle,
-                700,     // khung mới
-                700,
+                750,     // khung mới
+                750,
                 AnchorMode.Bottom   // ví dụ: đặt ảnh ở đáy
             );
 
 
-            Sprite paddedImage2 = SpritePadder.PadSprite(
+            Sprite paddedImage2 = SpriteScaler.ScaleAndPadSprite(
                 levelData.layer,
-                700,     // khung mới
-                700,
+                750,     // khung mới
+                750,
                 AnchorMode.Bottom   // ví dụ: đặt ảnh ở đáy
             );
 
@@ -164,7 +164,7 @@ namespace Game
         {
             var levelData = _levelLoader.GetLevelData();
 
-            Sprite paddedImage = SpritePadder.PadSprite(
+            Sprite paddedImage = SpriteScaler.ScaleAndPadSprite(
                 levelData.bottle,
                 750,     // khung mới
                 750,
@@ -172,7 +172,7 @@ namespace Game
             );
 
 
-            Sprite paddedImage2 = SpritePadder.PadSprite(
+            Sprite paddedImage2 = SpriteScaler.ScaleAndPadSprite(
                 levelData.layer,
                 750,     // khung mới
                 750,

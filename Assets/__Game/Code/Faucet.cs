@@ -11,6 +11,8 @@ public class Faucet : MonoBehaviour
     [SerializeField]
     GameObject waterDropPrefabs;
     [SerializeField]
+    Image waterDropImage;
+    [SerializeField]
     bool isPoured = false;
 
     [Header("Pouring Settings")]
@@ -102,7 +104,36 @@ public class Faucet : MonoBehaviour
     public void CreateDelayWater()
     {
         Vector3 waterPos = waterCreatePos.position + new Vector3(Random.Range(-randomRange, randomRange), 0f, 0f);
-        Instantiate(waterDropPrefabs, waterPos, Quaternion.identity, waterCreatePos);
+        GameObject waterDrop = Instantiate(waterDropPrefabs, waterPos, Quaternion.identity, waterCreatePos);
+        waterDropImage = waterDrop.GetComponent<Image>();
+        // Set water color based on type
+
+            switch (waterType)
+            {
+                case WaterType.Water:
+                    waterDropImage.color = new Color(0.4049484f, 0.9433962f, 0.911468f, 1f);
+                    break;
+                case WaterType.Milk:
+                    waterDropImage.color = Color.white;
+                    break;
+                case WaterType.Juice:
+                    waterDropImage.color = new Color(1f, 0.6092079f, 0f, 1f);
+                    break;
+                case WaterType.RedWine:
+                    waterDropImage.color = Color.red;
+                    break;
+                case WaterType.Soda:
+                    waterDropImage.color = new Color(0.4f, 0.26f, 0.13f, 1f); // Brown
+                    break;
+                case WaterType.Paint:
+                    waterDropImage.color = Color.green;
+                    break;
+
+                default:
+                    waterDropImage.color = Color.blue;
+                    break;
+            }
+        
     }
 
 

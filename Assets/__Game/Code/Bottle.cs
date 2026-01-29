@@ -95,26 +95,37 @@ namespace Game
 
             this.data = data;
 
-            switch(data.waterType)
+            print(data.waterType);
+
+
+            // Set water color based on type
+            if (waterImage != null)
             {
-                case WaterType.Water:
-                    waterImage.color = Color.blue;
-                    break;
-                case WaterType.Milk:
-                    waterImage.color = Color.white;
-                    break;
-                case WaterType.Juice:
-                    waterImage.color = new Color(1f, 0.6092079f,0f,1f);
-                    break;
-                case WaterType.RedWine:
-                    waterImage.color = Color.red;
-                    break;
-                case WaterType.Soda:
-                    waterImage.color = Color.cyan;
-                    break;
-                case WaterType.Paint:
-                    waterImage.color = Color.green;
-                    break;
+                switch (data.waterType)
+                {
+                    case WaterType.Water:
+                        waterImage.color = new Color(0.4049484f, 0.9433962f, 0.911468f, 1f);
+                        break;
+                    case WaterType.Milk:
+                        waterImage.color = Color.white;
+                        break;
+                    case WaterType.Juice:
+                        waterImage.color = new Color(1f, 0.6092079f, 0f, 1f);
+                        break;
+                    case WaterType.RedWine:
+                        waterImage.color = Color.red;
+                        break;
+                    case WaterType.Soda:
+                        waterImage.color = new Color(0.4f, 0.26f, 0.13f, 1f); // Brown
+                        break;
+                    case WaterType.Paint:
+                        waterImage.color = Color.green;
+                        break;
+
+                    default:
+                        waterImage.color = Color.blue;
+                        break;
+                }
             }
 
             bottleImage.sprite = data.bottle;
@@ -155,23 +166,6 @@ namespace Game
                 else
                 {
                     sodaTransform.gameObject.SetActive(false);
-                }
-            }
-
-            // Set water color based on type
-            if (waterImage != null)
-            {
-                switch (data.waterType)
-                {
-                    case WaterType.Soda:
-                        waterImage.color = new Color(0.4f, 0.26f, 0.13f, 1f); // Brown
-                        break;
-                    case WaterType.Paint:
-                        waterImage.color = new Color(1f, 0.5f, 0f, 1f); // Orange
-                        break;
-                    default:
-                        waterImage.color = Color.blue;
-                        break;
                 }
             }
         }
